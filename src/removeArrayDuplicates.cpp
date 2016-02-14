@@ -2,20 +2,51 @@
 OVERVIEW:  given an array that has duplicate values remove all duplicate values.
 E.g.: input: [1, 1, 2, 2, 3, 3], output [1, 2, 3]
 
-Ex 2: [4,4,2,2,1,5] output : [4,2,1,5]
+INPUTS: Integer array and length of the array.
 
-INPUTS: Integer array and length of the array .
+OUTPUT: Update input array by removing duplicate values.
 
-OUTPUT: Update input array by removing duplicate values and return the final array length
-
-ERROR CASES: Return -1 for invalid inputs.
+ERROR CASES: Return NULL for invalid inputs.
 
 NOTES: Don't create new array, try to change the input array.
 */
 
+#include <stdio.h>
 
-int removeArrayDuplicates(int *Arr, int len)
+void * removeArrayDuplicates(int *Arr, int len)
 {
-	
-	return -1;
+	int sorted = 1;
+	for (int index = 0; index < len - 1; index++) {
+		if (Arr[index] <= Arr[index + 1])
+			continue;
+		else {
+			sorted = 0;
+			break;
+		}
+	}
+	if (sorted) {
+		int j = 0;
+		for (int index = 1; index < len; index++){
+			if (Arr[index] != Arr[j]) {
+				j++;
+				Arr[j] = Arr[index]; // Move it to the front
+			}
+		}
+		len = j + 1;
+	}
+	else {
+		for (int index = 0; index < len; index++) {
+			int j = index + 1;
+			while (j < len) {
+				if (Arr[j] == Arr[index]) {
+					for (int k = j; k < len; k++)
+						Arr[k] = Arr[k + 1];
+					len--;
+				}
+				else
+					j++;
+			}
+		}
+	}
+	return NULL;
 }
